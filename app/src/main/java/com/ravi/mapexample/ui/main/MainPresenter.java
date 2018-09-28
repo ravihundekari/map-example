@@ -25,7 +25,7 @@ class MainPresenter extends BasePresenter<MainMvpView> {
         this.rxHelper = rxHelper;
     }
 
-    public void callFarmDataApi() {
+    void callFarmDataApi() {
         getMvpView().showLoading();
         rxHelper.getFarmDetails(this::onFarmDetailsSuccess, this::onFarmDetailsError);
     }
@@ -34,12 +34,10 @@ class MainPresenter extends BasePresenter<MainMvpView> {
         if (isViewAttached()) {
             getMvpView().stopLoadingDialog();
             if (farmDataList != null && !farmDataList.isEmpty()) {
-                List<Farm_> farmsList = new ArrayList<>(farmDataList.get(0).getFarms());
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                createAndDisplayMarker(farmsList, builder);
+                createAndDisplayMarker(new ArrayList<>(farmDataList.get(0).getFarms()), builder);
 
-                List<Field> fieldList = new ArrayList<>(farmDataList.get(0).getFields());
-                createAndDisplayPolygon(fieldList);
+                createAndDisplayPolygon(new ArrayList<>(farmDataList.get(0).getFields()));
 
                 getMvpView().animateCamera(builder);
             }
@@ -83,7 +81,7 @@ class MainPresenter extends BasePresenter<MainMvpView> {
         }
     }
 
-    public PolygonOptions addPolygonOptions(List<LatLng> latLngList) {
+    PolygonOptions addPolygonOptions(List<LatLng> latLngList) {
         PolygonOptions polygonOptions = new PolygonOptions();
         for (LatLng latLng : latLngList) {
             polygonOptions.add(latLng)
@@ -94,7 +92,7 @@ class MainPresenter extends BasePresenter<MainMvpView> {
         return polygonOptions;
     }
 
-    public void clearCompositeDisposable() {
+    void clearCompositeDisposable() {
         rxHelper.dispose();
     }
 }

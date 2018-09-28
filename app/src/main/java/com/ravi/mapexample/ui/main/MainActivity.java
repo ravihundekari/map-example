@@ -18,8 +18,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-
 public class MainActivity extends BaseAcitivity implements MainMvpView, OnMapReadyCallback {
     @Inject
     MainPresenter mainPresenter;
@@ -30,7 +28,6 @@ public class MainActivity extends BaseAcitivity implements MainMvpView, OnMapRea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         getActivityComponent().inject(this);
         mainPresenter.attachView(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
